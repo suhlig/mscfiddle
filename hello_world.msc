@@ -1,0 +1,13 @@
+msc {
+  # Generate SVG with mscgen -T svg -i *.msc
+
+  Browser, Filter, Portal, "PZN-Rule", WCM;
+  |||;
+  Browser => Filter [label = "GET /"];
+  Filter => Filter [label = "Add Render Parameter"];
+  Filter => Portal [label = "GET /"];
+  Filter => Portal [label = "Register Cookie"];
+  Portal => "PZN-Rule" [label = "Fill Content Spot"];
+  "PZN-Rule" => WCM [label = "Select Content"];
+  Filter => Browser [label = "Set Cookie"];
+}
