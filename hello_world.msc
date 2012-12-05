@@ -1,6 +1,4 @@
 msc {
-  # Generate SVG with mscgen -T svg -i *.msc
-
   Browser, Filter, Portal, "PZN-Rule", WCM;
   |||;
   Browser => Filter [label = "GET /"];
