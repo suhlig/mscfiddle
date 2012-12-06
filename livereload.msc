@@ -2,12 +2,14 @@ msc {
   Browser, "HTTP-Server", Livereload, Filesystem, Guard;
   |||;
   Browser => "HTTP-Server" [label = "GET /"];
+  "HTTP-Server" => Filesystem [label = "Read /index.html"];
   "HTTP-Server" => Browser [label = "HTML with hook"];
-  Browser => Livereload [label = "Register"];
+  Browser => Browser [label = "Execute hook"];
+  Browser => Livereload [label = "Register Web Socket"];
   Filesystem box Filesystem [label = "Waiting for change"],
   |||;
   |||;
-  Filesystem => Guard [label = "Change in /foobar.svg"];
+  Filesystem => Guard [label = "Change in /index.html"];
   Guard => Livereload [label = "Trigger reload"];
   Livereload => Browser [label = "Trigger reload"];
   Browser => "HTTP-Server" [label = "GET /"];
