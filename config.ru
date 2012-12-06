@@ -1,3 +1,4 @@
+require 'erb'
 require 'rack-livereload'
 
 use Rack::LiveReload
@@ -5,13 +6,14 @@ use Rack::LiveReload
 # http://stackoverflow.com/a/3930606
 root = File.expand_path(File.dirname(__FILE__))
 
-run Proc.new{ |env|
+run Proc.new{|env|
   path = Rack::Utils.unescape(env['PATH_INFO'])
-  index_file = File.join(root, path, "index.html")
+  @img = "#{path}.svg"
 
-  if File.exists?(index_file)
-    [200, {'Content-Type' => 'text/html', }, [File.read(index_file)]]
-  else
+  if !File.exists?(File.join(root, @img))
     Rack::Directory.new(root).call(env)
+  else
+    wrapped = ERB.new(File.read(File.join(root, "image.html.erb"))).result(binding)
+    [200, {'Content-Type' => 'text/html', }, [wrapped]]
   end
 }

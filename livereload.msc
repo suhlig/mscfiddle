@@ -1,0 +1,14 @@
+msc {
+  Browser, "HTTP-Server", Livereload, Filesystem, Guard;
+  |||;
+  Browser => "HTTP-Server" [label = "GET /"];
+  "HTTP-Server" => Browser [label = "HTML with hook"];
+  Browser => Livereload [label = "Register"];
+  Filesystem box Filesystem [label = "Waiting for change"],
+  |||;
+  |||;
+  Filesystem => Guard [label = "Change in /foobar.svg"];
+  Guard => Livereload [label = "Trigger reload"];
+  Livereload => Browser [label = "Trigger reload"];
+  Browser => "HTTP-Server" [label = "GET /"];
+}
