@@ -5,6 +5,7 @@ source "https://rubygems.org"
 
 group :development do
   gem 'guard-shell'
+  gem 'thin'
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'rb-inotify', :require => false
