@@ -5,3 +5,4 @@ end
 guard 'livereload' do
   watch(%r{.+\.(svg|erb|html)$})
 end
+
