@@ -9,7 +9,7 @@ msc {
   Filesystem box Filesystem [label = "Waiting for change"],
   |||;
   |||;
-  Filesystem => Guard [label = "Change in /index.html"];
+  Filesystem => Guard [label = "index.html changed"];
   Guard => Livereload [label = "Trigger reload"];
   Livereload => Browser [label = "Trigger reload"];
   Browser => "HTTP-Server" [label = "GET /"];

@@ -4,11 +4,12 @@ require 'rack-livereload'
 use Rack::LiveReload
 
 # http://stackoverflow.com/a/3930606
-root = File.expand_path(File.dirname(__FILE__))
+root = File.expand_path('.')
 
 run Proc.new{|env|
   path = Rack::Utils.unescape(env['PATH_INFO'])
   @img = "#{path}.svg"
+  @src = "#{path}.msc"
 
   if !File.exists?(File.join(root, @img))
     Rack::Directory.new(root).call(env)
