@@ -1,23 +1,29 @@
 # Auto-MSC
 
-Generates an SVG image for each msc file. It presents each image wrapped in a live-reloaded HTML page. Whenever an image is regenerated, the browser will refresh.
+Renders an msc file into an SVG. It presents the SVG wrapped in a live-reloaded HTML page, so that whenever the msc file is saved, the image is regenerated and the browser will auto-refresh the image.
 
 # Installation
 
-    $ brew bundle
+```
+# Install msc
+$ brew bundle
+
+# Install ruby prereqs
+$ bundle
+```
 
 # Usage
 
     1. $ `guard`
     1. $ `thin start`
     1. Open localhost:3000 in the browser
-    1. $ `touch livereload.msc`
+    1. $ `touch doc/livereload.msc`
 
-Every save to any msc file will trigger a browser refresh.
+Every subsequent save to an msc file will trigger a browser refresh.
 
 # MSC
 
-A guard rule is set up to generate an SVG from each msc file in the root directory of this app:
+A guard rule is set up to generate an SVG from each msc file in the root directory of this app like this:
 
 ```
 $ mscgen -T svg -i *.msc
@@ -36,3 +42,6 @@ wraps
 	http://localhost:3000/livereload.svg
 
 in a simple HTML page with livereload.
+
+# TODO
+* Make it a gem that has a bin script that can serve any directory

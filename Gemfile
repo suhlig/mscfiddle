@@ -1,10 +1,15 @@
-# A sample Gemfile
 source "https://rubygems.org"
 
-# gem "rails"
+gem 'sinatra'
 
 group :development do
+  gem 'minitest'
+  gem 'rake'
+  gem 'rack-test'
+  gem 'rerun'
+  gem 'pry'
   gem 'guard-shell'
+  gem 'guard-minitest'
   gem 'thin'
   gem 'guard-livereload'
   gem 'rack-livereload'
