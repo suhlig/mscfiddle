@@ -2,6 +2,10 @@
 
 Generates an SVG image for each msc file. It presents each image wrapped in a live-reloaded HTML page. Whenever an image is regenerated, the browser will refresh.
 
+# Installation
+
+    $ brew bundle
+
 # Usage
 
     1. $ guard
