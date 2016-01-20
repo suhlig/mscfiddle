@@ -8,11 +8,12 @@ Generates an SVG image for each msc file. It presents each image wrapped in a li
 
 # Usage
 
-    1. $ guard
-    2. $ thin start
-    3. Open localhost:3000 in browser
+    1. $ `guard`
+    1. $ `thin start`
+    1. Open localhost:3000/livereload in the browser
+    1. $ `touch livereload.msc`
 
-Now every save to any msc file will trigger a browser refresh.
+Every save to any msc file will trigger a browser refresh.
 
 # MSC
 
