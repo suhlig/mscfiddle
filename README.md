@@ -10,7 +10,7 @@ Generates an SVG image for each msc file. It presents each image wrapped in a li
 
     1. $ `guard`
     1. $ `thin start`
-    1. Open localhost:3000/livereload in the browser
+    1. Open localhost:3000 in the browser
     1. $ `touch livereload.msc`
 
 Every save to any msc file will trigger a browser refresh.
@@ -19,9 +19,11 @@ Every save to any msc file will trigger a browser refresh.
 
 A guard rule is set up to generate an SVG from each msc file in the root directory of this app:
 
-	$ mscgen -T svg -i *.msc
+```
+$ mscgen -T svg -i *.msc
+```
 
-For the MSC syntax, see http://www.mcternan.me.uk/mscgen/
+For the MSC syntax, see the [msc home page](http://www.mcternan.me.uk/mscgen/).
 
 # Live-reloaded Images
 
