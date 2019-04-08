@@ -1,11 +1,16 @@
 require 'sinatra/base'
 require 'tilt/erb'
 require 'rack-livereload'
+require 'sinatra/partial'
 
 module MscFiddle
   class WebApp < Sinatra::Base
     set :views, 'views'
     use Rack::LiveReload
+
+    register Sinatra::Partial
+    set :partial_template_engine, :erb
+    enable :partial_underscores
 
     # http://stackoverflow.com/a/3930606
     def initialize(doc_root = nil)
@@ -14,12 +19,12 @@ module MscFiddle
     end
 
     get '/' do
-      Dir.entries(@doc_root).select do |f|
+      @charts = Dir.entries(@doc_root).select do |f|
         '.msc' == File.extname(f)
       end.map do |f|
-        bn = File.basename(f, '.msc')
-        "<a href='#{bn}'>#{bn}</a><br>"
+        File.basename(f, '.msc')
       end
+      erb :index
     end
 
     get %r{/(.+\.svg)} do |file|
@@ -33,13 +38,12 @@ module MscFiddle
     end
 
     get '/*' do
-      path = params[:splat].first
-
-      @img = "#{path}.svg"
-      @src = "#{path}.msc"
+      @title = params[:splat].first
+      @img = "#{@title}.svg"
+      @src = "#{@title}.msc"
 
       if File.exists?(File.join(@doc_root, @img))
-        erb :'image.html'
+        erb :image
       else
         halt 404, 'Not found'
       end
