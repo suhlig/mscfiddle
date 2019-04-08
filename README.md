@@ -1,22 +1,19 @@
-# Auto-MSC
+# MSC Fiddle
 
 Renders an msc file into an SVG. It presents the SVG wrapped in a live-reloaded HTML page, so that whenever the msc file is saved, the image is regenerated and the browser will auto-refresh the image.
 
 # Installation
 
-```
-# Install msc
-$ brew bundle
-
-# Install ruby prereqs
-$ bundle
+```command
+$ brew bundle # Installs msc
+$ bundle      # Installs Ruby prereqs
 ```
 
 # Usage
 
-    1. $ `bundle exec guard`
-    1. $ `thin start`
-    1. Open localhost:3000 in the browser
+1. `bundle exec guard`
+1. `thin start`
+1. Open localhost:3000 in the browser
 
 Every subsequent save to an msc file will trigger a browser refresh, e.g. after `touch doc/livereload.msc`.
 
@@ -24,7 +21,7 @@ Every subsequent save to an msc file will trigger a browser refresh, e.g. after 
 
 A guard rule is set up to generate an SVG from each msc file in the root directory of this app like this:
 
-```
+```command
 $ mscgen -T svg -i *.msc
 ```
 
@@ -52,4 +49,6 @@ $ bundle exec rerun -d lib thin start
 
 # TODO
 
+* Post MSC from browser-form so that we don't need local files
 * Make it a gem that has a bin script that can serve any directory
+  - `mscfiddle doc/livereload.msc` would launch a web server that livereloads whenever this file was changed
