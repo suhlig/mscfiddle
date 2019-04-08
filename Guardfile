@@ -3,7 +3,7 @@ guard 'shell' do
 end
 
 guard 'livereload' do
-  watch(%r{.+\.(svg|erb|html)$})
+  watch(%r{.+\.(rb|svg|erb|html)$})
 end
 
 guard 'minitest' do
@@ -11,4 +11,9 @@ guard 'minitest' do
   watch(%r|^lib/*\.rb|){'test'}
   watch(%r{^lib/.*/([^/]+)\.rb$}){|m| "test/unit/test_#{m[1]}.rb"}
   watch(%r|^test/helper\.rb|){'test'}
+end
+
+guard :bundler do
+  require 'guard/bundler'
+  watch(%r|Gemfile|)
 end

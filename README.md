@@ -14,14 +14,13 @@ $ bundle
 
 # Usage
 
-    1. $ `guard`
+    1. $ `bundle exec guard`
     1. $ `thin start`
     1. Open localhost:3000 in the browser
-    1. $ `touch doc/livereload.msc`
 
-Every subsequent save to an msc file will trigger a browser refresh.
+Every subsequent save to an msc file will trigger a browser refresh, e.g. after `touch doc/livereload.msc`.
 
-# MSC
+# Auto-Regenerating an MSC Chart
 
 A guard rule is set up to generate an SVG from each msc file in the root directory of this app like this:
 
@@ -43,5 +42,14 @@ wraps
 
 in a simple HTML page with livereload.
 
+# Development
+
+Thin needs to restart in order to pick up changes in the web app. This can be automated with
+
+```command
+$ bundle exec rerun -d lib thin start
+```
+
 # TODO
+
 * Make it a gem that has a bin script that can serve any directory
