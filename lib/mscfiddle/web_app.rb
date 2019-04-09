@@ -1,52 +1,43 @@
 require 'sinatra/base'
 require 'tilt/erb'
-require 'rack-livereload'
-require 'sinatra/partial'
+require 'digest'
+require 'json'
+require 'mscfiddle/msc_gen'
 
 module MscFiddle
   class WebApp < Sinatra::Base
+    IMAGES = {
+      empty: '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 500 500" width="500" height="500" />',
+    }
+
     set :views, 'views'
-    use Rack::LiveReload
-
-    register Sinatra::Partial
-    set :partial_template_engine, :erb
-    enable :partial_underscores
-
-    # http://stackoverflow.com/a/3930606
-    def initialize(doc_root = nil)
-      super
-      @doc_root = doc_root || File.expand_path('.')
-    end
 
     get '/' do
-      @charts = Dir.entries(@doc_root).select do |f|
-        '.msc' == File.extname(f)
-      end.map do |f|
-        File.basename(f, '.msc')
-      end
-      erb :index
+      erb :fiddle
     end
 
-    get %r{/(.+\.svg)} do |file|
+    post '/' do
+      msc = request.body.read
+      @sha = Digest::SHA256.hexdigest(msc)
+      @svg = MscGen.new(msc).to_svg
+      IMAGES[@sha] = @svg
+
+      content_type 'application/javascript'
+      erb :'render.js', layout: false
+    rescue
+      @error = $!.message
+      erb :'error.js', layout: false
+    end
+
+    get '/empty.svg' do
       content_type 'image/svg+xml'
-      File.read(File.join(@doc_root, file))
+      IMAGES.fetch(:empty)
     end
 
-    get %r{/(.+\.msc)} do |file|
-      content_type 'text/plain'
-      File.read(File.join(@doc_root, file))
-    end
-
-    get '/*' do
-      @title = params[:splat].first
-      @img = "#{@title}.svg"
-      @src = "#{@title}.msc"
-
-      if File.exists?(File.join(@doc_root, @img))
-        erb :image
-      else
-        halt 404, 'Not found'
-      end
+    get %r|/([A-Fa-f0-9]{64})\.svg| do |sha|
+      content_type 'image/svg+xml'
+      IMAGES.fetch(sha, :empty)
     end
   end
 end

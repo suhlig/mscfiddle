@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '../lib')
+
+require 'mscfiddle/web_app'
+require 'optparse'
+
+port = 0
+OptionParser.new do |opts|
+  opts.on('--port PORT', Integer, 'Set port to PORT') do |p|
+    port = p
+  end
+end.parse!
+
+trap("INT") { Rack::Handler::WEBrick.shutdown }
+
+Rack::Handler::WEBrick.run(MscFiddle::WebApp.new, :Port => port) do |server|
+  warn "Server is listening on #{server.config[:BindAddress]}:#{server.config[:Port]}"
+end

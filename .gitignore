@@ -1,2 +1,7 @@
 *.svg
 *.png
+/.bundle/
+/Gemfile.lock
+/pkg/
+/tmp/
+*.bundle

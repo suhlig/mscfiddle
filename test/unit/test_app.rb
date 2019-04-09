@@ -1,4 +1,5 @@
 require_relative '../helper'
+require 'mscfiddle/web_app'
 require 'rack/test'
 
 class TestApp < Minitest::Test

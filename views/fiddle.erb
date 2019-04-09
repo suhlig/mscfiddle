@@ -1,0 +1,52 @@
+<style>
+  .column {
+    float: left;
+    width: 50%;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  #error {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+
+<script type="text/javascript">
+function svg_render() {
+  xhr = new XMLHttpRequest();
+  xhr.open('POST', '/');
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function() {
+    if (xhr.status === 200)
+      eval(xhr.responseText);
+    else
+      console.log("status: " + xhr.status + "; responseText: " + xhr.responseText);
+  };
+  xhr.send(document.getElementById("chart").value);
+}
+</script>
+
+<div class="row">
+  <div class="column">
+    <form onsubmit="svg_render(); return false;">
+      <button type="submit">Run</button>
+      <textarea id="chart" style="width: 100%; height: 500px" autofocus>
+        msc {
+          Alice, Bob;
+          Alice => Bob [label = "HELLO!"];
+          Bob -> Alice [label = "WHAT?"];
+        }
+      </textarea>
+    </form>
+    <p id="error"></p>
+  </div>
+  <div class="column">
+    <img id="fiddled" src="/empty.svg">
+  </div>
+</div>

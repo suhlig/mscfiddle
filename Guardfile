@@ -1,7 +1,3 @@
-guard 'shell' do
-  watch(/(.*).msc/) {|m| `mscgen -T svg -i #{m[0]}`}
-end
-
 guard 'livereload' do
   watch(%r{.+\.(rb|svg|erb|html)$})
 end
@@ -13,7 +9,7 @@ guard 'minitest' do
   watch(%r|^test/helper\.rb|){'test'}
 end
 
-guard :bundler do
+guard 'bundler' do
   require 'guard/bundler'
   watch(%r|Gemfile|)
 end
